@@ -57,11 +57,51 @@ public class checks {
                 if(mod10 != Integer.parseInt(String.valueOf(digitableLine.charAt(point)))) {
                     valid = false;
                 }
-                System.out.print(digitableLine.charAt(point));
                 mod10 = 0;                       
             }
         }
         return valid;
     }
     // end function validMod10
+    // function validMod10con
+    public static boolean validMod10con(String digitableLine) {
+        boolean valid = true;
+        int[] cvMod10 = new int[4];
+        cvMod10[0] = 11;
+        cvMod10[1] = 23;
+        cvMod10[2] = 35;
+        cvMod10[3] = 47;
+        int mod10 = 0;
+        int facMod10 = 1;
+        for(int point = 0; point < digitableLine.length(); point++) {
+            int number;
+            if(point != cvMod10[0] && point != cvMod10[1] && point != cvMod10[2] && point != cvMod10[3]) {
+                if(facMod10 == 1) {
+                    facMod10 = 2;
+                } else {
+                    facMod10 = 1;
+                } 
+                number = Integer.parseInt(String.valueOf(digitableLine.charAt(point)));
+                number = number*facMod10;
+                if(number >= 10) {
+                    mod10 = mod10 + number%10;
+                    mod10 = mod10 + number/10;
+                } else {
+                    mod10 = mod10 + number;
+                }
+            } else {
+                mod10 = mod10%10;
+                if(mod10 != 0) {
+                    mod10 = 10 - mod10;                    
+                }
+                if(mod10 != Integer.parseInt(String.valueOf(digitableLine.charAt(point)))) {
+                    valid = false;
+                }
+                mod10 = 0;
+                facMod10 = 1;
+            }
+        }
+        return valid;
+    }
+    // end function validMod10con
 }

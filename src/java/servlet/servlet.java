@@ -4,7 +4,7 @@ import API.barcod;
 import API.checks;
 import API.informations;
 import java.io.IOException;
-import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,8 @@ public class servlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String digitableLine = request.getParameter("digitable").trim();
             
-        if(digitableLine.length() == 47)  {
+        switch (digitableLine.length()) {
+            case 47:
                 valid = checks.numeric(digitableLine);
                 if(valid) {
                     valid = checks.validMod10(digitableLine.substring(0, 32));
@@ -29,41 +30,49 @@ public class servlet extends HttpServlet {
                         barCode = barcod.doBar(digitableLine);
                         shelfLife = informations.shelflife(digitableLine.substring(33, 37));
                         value = informations.value(digitableLine.substring(37));
-                        result = "Boleto válido!" + 
-                                "</br>Valor do boleto: " + value +
-                                "</br>Vencimento do boleto (fator): " + shelfLife +
-                                "</br>Código de barras: " + barCode;
+                        result = "Boleto válido! Título bancário.";
                     } else {
-                        result = "Boleto inválido! </br>" + 
-                            "Problemas na confirmação dos códigos de verificação do boleto.";
+                        result = "Boleto inválido (título bancário)! </br>" +
+                                "Problemas na confirmação dos códigos de verificação do boleto.";
                     }
                 } else {
-                    result = "Boleto inválido! </br>" + 
+                    result = "Boleto inválido (título bancário)! </br>" + 
                             "A sequencia digitada contém caracteres não numéricos.";
                 }
-            } else {
-                result = "Desculpe! Digitos insuficientes. </br>" + 
-                            "O sistema avalia linha digitável de 47 dígitos.";
-        }      
-        //RequestDispatcher rd = new RequestDispatcher();    
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>EASY BOLETO - BOLETO DECRIPTION</title>"); 
-            out.println("<link rel='stylesheet' href='estilo.css' type='text/css'/>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h2>" + request.getContextPath() + "</h2>");
-            out.println("<p>");out.println(result);
-            out.println("</p>");
-            out.println("</br>");
-            out.println("</br>");
-            out.println("<img src=\"img/man_thinking_numbers.jpg\" width=\"520\">");
-            out.println("<br><a href='index.html'>SEND ME ANOTHER BOLETO</a>");
-            out.println("</body>");
-            out.println("</html>");
+                break;
+            case 48:
+                valid = checks.numeric(digitableLine);
+                if(valid) {
+                    valid = checks.validMod10con(digitableLine);
+                    if(valid) {
+                        barCode = barcod.doBarCon(digitableLine);
+                        shelfLife = "infelizmente, não foi possível determinar o vencimento";
+                        value = informations.valueCon(barCode.substring(4,15));
+                        result = "Boleto válido! Pagamento de concenssionária.";
+                    } else {
+                        result = "Boleto inválido (pagamento de concessionaria)! </br>" +
+                                "Problemas na confirmação dos códigos de verificação do boleto.";
+                    }
+                } else {
+                    result = "Boleto inválido (pagamento de concessionaria)! </br>" + 
+                            "A sequencia digitada contém caracteres não numéricos.";
+                }
+                break;
+            default:
+                result = "Boleto inválido, desculpe! Digitos insuficientes. </br>" +
+                            "O sistema avalia linha digitável de 47 dígitos (títulos bancários) </br>" +
+                            "ou 48 dígitos (pagamento de concessionárias).";
+                break;
         }
+        request.setAttribute("status", result);
+        request.setAttribute("value", value);
+        request.setAttribute("shelf", shelfLife);
+        request.setAttribute("bar", barCode);
+
+        RequestDispatcher rd;
+        rd = request.getRequestDispatcher("jsp/description.jsp");
+        rd.forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
