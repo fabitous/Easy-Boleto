@@ -6,16 +6,17 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>EASY BOLETO - CHECK YOUR BOLETO</title>
+        <title>EASY BOLETO - CHECK SEU BOLETO</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel='stylesheet' href='estilo.css' type='text/css'/>
     </head>
     <body>
-        <div><h2>PLEASE</h2><h3>Tell us your boleto number with no spaces</h3></div><br>
+        <div><h2>CHECK SEU BOLETO</h2><h3>Envie a linha digitável através do espaço abaixo</h3></div><br>
         <form action="myNewServlet" method="get">
-            <label>Boleto number: </label><input id="field" type="text" name="boleto"><br><br>
-            <input type="submit" value="Submit">
+            <label>Linha digitável: </label><input id="field" type="text" name="digitable"><br><br>
+            <input type="submit" value="Enviar">
+            <p>Atenção: Envie apenas números, não envie pontos ou traço.</p>
         </form>
         <br>
         <img src="img/man_thinking_numbers.jpg" width="520">

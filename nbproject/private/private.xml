@@ -3,9 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Josimar/Desktop/Ewally/WebAppROCK20/WebAppROCK/WebAppROCK/src/java/API/servlet.java</file>
-            <file>file:/C:/Users/Josimar/Desktop/Ewally/WebAppROCK20/WebAppROCK/WebAppROCK/web/estilo.css</file>
-            <file>file:/C:/Users/Josimar/Desktop/Ewally/WebAppROCK20/WebAppROCK/WebAppROCK/web/index.html</file>
+            <file>file:/C:/Users/Josimar/Desktop/Ewally/EasyBoleto/WebAppROCK/WebAppROCK/src/java/servlet/servlet.java</file>
+            <file>file:/C:/Users/Josimar/Desktop/Ewally/EasyBoleto/WebAppROCK/WebAppROCK/src/java/API/checks.java</file>
+            <file>file:/C:/Users/Josimar/Desktop/Ewally/EasyBoleto/WebAppROCK/WebAppROCK/web/index.html</file>
+            <file>file:/C:/Users/Josimar/Desktop/Ewally/EasyBoleto/WebAppROCK/WebAppROCK/src/java/API/shelf.java</file>
+            <file>file:/C:/Users/Josimar/Desktop/Ewally/EasyBoleto/WebAppROCK/WebAppROCK/src/java/API/barcod.java</file>
+            <file>file:/C:/Users/Josimar/Desktop/Ewally/EasyBoleto/WebAppROCK/WebAppROCK/src/java/API/informations.java</file>
         </group>
     </open-files>
 </project-private>
